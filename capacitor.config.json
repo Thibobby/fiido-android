@@ -1,0 +1,24 @@
+{
+  "appId": "fr.fiidoexplorer.app",
+  "appName": "Fiido Explorer",
+  "webDir": "www",
+  "server": {
+    "url": "https://__OWNER__.github.io/fiido/",
+    "errorPath": "offline.html",
+    "androidScheme": "https"
+  },
+  "android": {
+    "useLegacyBridge": true,
+    "backgroundColor": "#0B0E10"
+  },
+  "plugins": {
+    "BluetoothLe": {
+      "displayStrings": {
+        "scanning": "Recherche du vélo…",
+        "cancel": "Annuler",
+        "availableDevices": "Vélos à proximité",
+        "noDeviceFound": "Aucun vélo trouvé. Est-il allumé ?"
+      }
+    }
+  }
+}
