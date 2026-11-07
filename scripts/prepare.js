@@ -71,7 +71,12 @@ else if (step === 'android'){
     '<item name="android:background">@drawable/splash</item>',
     '<item name="android:background">@drawable/splash</item>\n        <item name="windowSplashScreenBackground">#0B0E10</item>\n        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>'));
 
-  // 5. Textes de la notification « trajet en cours »
+  // 5. Activité principale avec rapport de plantage
+  fs.copyFileSync(path.join(root, 'resources/MainActivity.java'),
+    path.join(root, 'android/app/src/main/java/fr/fiidoexplorer/app/MainActivity.java'));
+  console.log('✔ rapport de plantage');
+
+  // 6. Textes de la notification « trajet en cours »
   edit(`${res}/values/strings.xml`, s => s.replace('</resources>',
     `    <string name="capacitor_background_geolocation_notification_channel_name">Trajet en cours</string>
     <string name="capacitor_background_geolocation_notification_icon">drawable/ic_tracking</string>
