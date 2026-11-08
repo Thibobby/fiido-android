@@ -3,8 +3,7 @@
   "appName": "Fiido Explorer",
   "webDir": "www",
   "server": {
-    "url": "https://__OWNER__.github.io/fiido/",
-    "errorPath": "offline.html",
+    "hostname": "__OWNER__.github.io",
     "androidScheme": "https"
   },
   "android": {

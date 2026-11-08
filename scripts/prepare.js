@@ -26,11 +26,30 @@ function copyDir(src, dst){
   }
 }
 
-if (step === 'config'){
+async function prepareConfig(){
   if (!owner) throw new Error('Variable OWNER manquante');
-  // L'app charge l'interface depuis GitHub Pages : les mises à jour de index.html arrivent sans réinstaller l'APK
-  for (const f of ['capacitor.config.json', 'www/offline.html'])
+  // L'app garde l'adresse <compte>.github.io : les données déjà enregistrées sur le téléphone sont conservées
+  for (const f of ['capacitor.config.json', 'www/index.html', 'www/offline.html'])
     edit(f, s => s.split('__OWNER__').join(owner));
+
+  // Interface embarquée : la dernière version publiée dans le dossier « fiido »
+  const url = `https://raw.githubusercontent.com/${owner}/fiido/main/index.html`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`Impossible de récupérer ${url} (${r.status})`);
+  const html = await r.text();
+  if (!/APP_VERSION/.test(html)) throw new Error('La page récupérée ne ressemble pas à Fiido Explorer');
+  fs.writeFileSync(path.join(root, 'www/app.html'), html);
+  console.log('✔ interface embarquée : version ' + (html.match(/APP_VERSION\s*=\s*'([^']+)'/) || [])[1]);
+
+  // Bibliothèques (carte et graphiques) embarquées pour fonctionner sans réseau
+  fs.mkdirSync(path.join(root, 'www/lib'), {recursive: true});
+  for (const [src, dst] of [['leaflet/dist/leaflet.css', 'leaflet.css'], ['leaflet/dist/leaflet.js', 'leaflet.js'], ['chart.js/dist/chart.umd.js', 'chart.umd.js']])
+    fs.copyFileSync(path.join(root, 'node_modules', src), path.join(root, 'www/lib', dst));
+  console.log('✔ bibliothèques embarquées');
+}
+
+if (step === 'config'){
+  prepareConfig().catch(e => { console.error('✘ ' + e.message); process.exit(1); });
 }
 
 else if (step === 'android'){

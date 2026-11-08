@@ -1,14 +1,16 @@
 {
   "name": "fiido-explorer-apk",
-  "version": "0.10.0",
+  "version": "0.12.0",
   "private": true,
   "description": "Application Android de Fiido Explorer (Capacitor)",
   "dependencies": {
+    "@capacitor-community/background-geolocation": "1.3.1",
+    "@capacitor-community/bluetooth-le": "8.3.0",
     "@capacitor/android": "8.6.0",
     "@capacitor/core": "8.6.0",
     "@capacitor/local-notifications": "8.3.1",
-    "@capacitor-community/background-geolocation": "1.3.1",
-    "@capacitor-community/bluetooth-le": "8.3.0"
+    "chart.js": "4.4.1",
+    "leaflet": "1.9.4"
   },
   "devDependencies": {
     "@capacitor/cli": "8.6.0"
