@@ -1,6 +1,6 @@
 {
   "name": "fiido-explorer-apk",
-  "version": "0.12.0",
+  "version": "0.12.2",
   "private": true,
   "description": "Application Android de Fiido Explorer (Capacitor)",
   "dependencies": {

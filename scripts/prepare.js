@@ -55,10 +55,13 @@ if (step === 'config'){
 else if (step === 'android'){
   const res = 'android/app/src/main/res';
 
-  // 1. Numéro de version : chaque compilation remplace la précédente sur le téléphone
+  // 1. Numéro de version : chaque compilation remplace la précédente sur le téléphone.
+  //    Le nom affiché dans les réglages Android reprend la version de l'interface embarquée.
+  const appHtml = fs.readFileSync(path.join(root, 'www/app.html'), 'utf8');
+  const appVer = ((appHtml.match(/APP_VERSION\s*=\s*'([^']+)'/) || [])[1] || '0').replace(/\s*bêta/, '-beta');
   edit('android/app/build.gradle', s => s
     .replace(/versionCode \d+/, `versionCode ${build}`)
-    .replace(/versionName "[^"]*"/, `versionName "0.10.${build}"`));
+    .replace(/versionName "[^"]*"/, `versionName "${appVer} (build ${build})"`));
 
   // 2. Signature : la même clé à chaque compilation, sinon Android refuse la mise à jour
   edit('android/app/build.gradle', s => s
